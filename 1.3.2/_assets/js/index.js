@@ -22,9 +22,18 @@
 				}
 			},
 			_globalnav: function(){
-				var base = $( "base" ).attr( "href" ).split('demos')[0],
-					base = base.split('index.html')[0] + this.options.globalNav + "/";
-					
+				var version, base,
+					bases = $( "base" ).attr( "href" ).split('/'),
+					versionString = /^[0-9]\.[0-9]\.[0-9]/;
+
+				bases.forEach( function( segment ){
+					if ( versionString.test( segment ) ){
+						base = $( "base" ).attr( "href" )
+							.split( segment )[ 0 ]
+							.split( "index.html" )[0] + segment + "/";
+					}
+				});
+
 				this.element.find( "a" ).each(function() {
 					var href = base + $( this ).attr( "href" );
 					$( this ).attr( "href", href );
